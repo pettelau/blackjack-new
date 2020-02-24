@@ -15,6 +15,7 @@ let counter = 0; // en counter som bruker i funksjonen under for å kun vise de 
 
 leaderboardfunc();
 function leaderboardfunc() {
+  //funksjon som oppdaterer leaderboardet på siden
   connection.query(
     "SELECT * FROM Leaderboard ORDER BY score DESC;",
     (error, results) => {
@@ -24,36 +25,41 @@ function leaderboardfunc() {
           leaderboardList.innerHTML +=
             "<li>" + player.username + ": " + player.score + "%" + "</li>";
         }
-        counter += 1;
+        counter += 1; // plusser på counteren med 1 for hver gang, slik at løkka stopper etter 5 ganger
       }
     }
   );
-  console.log("nicneb");
 }
 
-let spillerTreff = 0;
+let spillerTreff = 0; // en variabel som starter på 0 og som blir 1 om emailen som skrives inn treffer en eksisterende
+// bruker i databasen.
 loggInnKnapp.onclick = () => {
+  //knapp og funksjon for å logge inn med en eksisterende bruker
   emailLoggInn.disabled = true;
   connection.query("SELECT * FROM Leaderboard", (error, results) => {
     if (error) return console.error(error);
     for (let spiller of results) {
       if (spiller.email == emailLoggInn.value) {
-        saldo = spiller.score * 10;
+        saldo = spiller.score * 10; //ROIen ganges med 10 for å få saldoen opp, siden startsaldo er 1000 og roi er 100 by default
         spillerTreff += 1;
         visSaldo();
-        stuff.style.visibility = "visible";
-        loggInnKnapp.style.visibility = "hidden";
+        stuff.style.visibility = "visible"; //gjør diverse knapper og input synlige
+        loggInnKnapp.style.visibility = "hidden"; //gjør logg inn knapp usynlig
       }
     }
     if (spillerTreff == 0) {
+      //hvis emailen ikke finner en passende bruker i databasen returneres denne alerten.
       alert("Finner ikke brukeren i databasen. Prøv igjen.");
       emailLoggInn.disabled = false;
     }
   });
 };
 leggtilbruker.onclick = () => {
+  //legge til ny bruker
   if (brukernavnNy.value !== emailNy.value) {
+    //brukernavn og email kan ikke være like (security reasons)
     connection.query(
+      //legger inn i databasen med en spørring
       "INSERT INTO Leaderboard (username, email, score) VALUES (?, ?, ?)",
       [brukernavnNy.value, emailNy.value, 100]
     );
@@ -61,8 +67,8 @@ leggtilbruker.onclick = () => {
 };
 
 let alleKort = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
-let alleKortValue = ["A", 2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K"];
-let alleKortPoeng = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10];
+let alleKortValue = ["A", 2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K"]; //alle kortene sine navn
+let alleKortPoeng = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]; //alle kortene sine verdier i form av poeng i BJ (10-K er 10 poeng)
 let alleKortBilder = [
   "ess.png",
   "to.png",
@@ -77,9 +83,8 @@ let alleKortBilder = [
   "knekt.png",
   "dame.png",
   "konge.png"
-];
+]; //filnavnet til alle bildene som blir printet ut til siden
 
-//test
 let dealerKort1;
 let dealerKort2;
 let dealerKort3;
@@ -87,7 +92,7 @@ let dealerKort4;
 let dealerKort5;
 let dealerKort6;
 let dealerKort7;
-let dealerKort8;
+let dealerKort8; //alle dealerkort
 
 let spillerKort1;
 let spillerKort2;
@@ -439,7 +444,6 @@ function steg2() {
     console.log("Andre dealersum: " + dealerSum);
     console.log("Andre spillersum: " + spillerSum);
   }
-  //resultat() kjøres for hver runde og skriver ut riktig melding avhengig tap/seier og oppdaterer saldo til neste rudne
   function resultat() {
     if (currentValue(dealerKortArray) > 21) {
       document.getElementById("ut1").innerHTML =
@@ -464,7 +468,6 @@ function steg2() {
         document.getElementById("ut1").innerHTML = "<br>" + resultatTap;
       }
     }
-    //Lager en nyspill knapp første gang vissaldo() blir kjørt, etter første runde blir knappen bare skjult/gjort synlig
     visSaldo();
     if (nyttSpillCounter == 0) {
       nyttSpillKnapp = document.createElement("button");
@@ -473,13 +476,12 @@ function steg2() {
       nyRunde();
       nyttSpillCounter += 1;
     }
-    //fjerner spillknapene og viser nytt spill kanppen
     nyttSpillKnapp.style.visibility = "visible";
     staKnapp.style.visibility = "hidden";
     trekkNyKnapp.style.visibility = "hidden";
   }
 }
-//Knapp for nytt spill, Låser opp for ny innsats, tømmer all spillutdata (bilder og tall), tømmer arrays og fjerner knappen til ny runde
+//bhhbbuhb
 function nyRunde() {
   nyttSpillKnapp.onclick = () => {
     document.getElementById("sjekkInnsats").disabled = false;
