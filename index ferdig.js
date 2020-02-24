@@ -439,6 +439,7 @@ function steg2() {
     console.log("Andre dealersum: " + dealerSum);
     console.log("Andre spillersum: " + spillerSum);
   }
+  //resultat() kjøres for hver runde og skriver ut riktig melding avhengig tap/seier og oppdaterer saldo til neste rudne
   function resultat() {
     if (currentValue(dealerKortArray) > 21) {
       document.getElementById("ut1").innerHTML =
@@ -463,6 +464,7 @@ function steg2() {
         document.getElementById("ut1").innerHTML = "<br>" + resultatTap;
       }
     }
+    //Lager en nyspill knapp første gang vissaldo() blir kjørt, etter første runde blir knappen bare skjult/gjort synlig
     visSaldo();
     if (nyttSpillCounter == 0) {
       nyttSpillKnapp = document.createElement("button");
@@ -471,12 +473,13 @@ function steg2() {
       nyRunde();
       nyttSpillCounter += 1;
     }
+    //fjerner spillknapene og viser nytt spill kanppen
     nyttSpillKnapp.style.visibility = "visible";
     staKnapp.style.visibility = "hidden";
     trekkNyKnapp.style.visibility = "hidden";
   }
 }
-//bhhbbuhb
+//Knapp for nytt spill, Låser opp for ny innsats, tømmer all spillutdata (bilder og tall), tømmer arrays og fjerner knappen til ny runde
 function nyRunde() {
   nyttSpillKnapp.onclick = () => {
     document.getElementById("sjekkInnsats").disabled = false;
