@@ -15,15 +15,19 @@ let counter = 0; // en counter som bruker i funksjonen under for å kun vise de 
 
 leaderboardfunc();
 function leaderboardfunc() {
-  connection.query("SELECT * FROM Leaderboard ORDER BY score DESC;", (error, results) => {
-    if (error) return console.error(error);
-    for (let player of results) {
-      if (counter < 5) {
-        leaderboardList.innerHTML += "<li>" + player.username + ": " + player.score + "%" + "</li>";
+  connection.query(
+    "SELECT * FROM Leaderboard ORDER BY score DESC;",
+    (error, results) => {
+      if (error) return console.error(error);
+      for (let player of results) {
+        if (counter < 5) {
+          leaderboardList.innerHTML +=
+            "<li>" + player.username + ": " + player.score + "%" + "</li>";
+        }
+        counter += 1;
       }
-      counter += 1;
     }
-  });
+  );
   console.log("nicneb");
 }
 
@@ -49,11 +53,10 @@ loggInnKnapp.onclick = () => {
 };
 leggtilbruker.onclick = () => {
   if (brukernavnNy.value !== emailNy.value) {
-    connection.query("INSERT INTO Leaderboard (username, email, score) VALUES (?, ?, ?)", [
-      brukernavnNy.value,
-      emailNy.value,
-      100
-    ]);
+    connection.query(
+      "INSERT INTO Leaderboard (username, email, score) VALUES (?, ?, ?)",
+      [brukernavnNy.value, emailNy.value, 100]
+    );
   }
 };
 
@@ -174,7 +177,8 @@ oppstartKnapp.onclick = () => {
   spillerKortArray = [spillerKort1, spillerKort2];
 
   bilde1.src = alleKortBilder[dealerKort1 - 1];
-  document.getElementById("currentPointDealer").innerHTML = alleKortPoeng[dealerKort1 - 1];
+  document.getElementById("currentPointDealer").innerHTML =
+    alleKortPoeng[dealerKort1 - 1];
 
   bilde9.src = alleKortBilder[spillerKort1 - 1];
   bilde10.src = alleKortBilder[spillerKort2 - 1];
@@ -248,7 +252,9 @@ function currentValue(trukkedeKort) {
 
 function steg2() {
   let at = 0;
-  document.getElementById("currentPoint").innerText = currentValue(spillerKortArray);
+  document.getElementById("currentPoint").innerText = currentValue(
+    spillerKortArray
+  );
   if (currentValue(spillerKortArray) == 21) {
     setTimeout(function() {
       alert("Blackjack babyyyyy");
@@ -265,7 +271,9 @@ function steg2() {
     if (at == 0) {
       bilde11.src = alleKortBilder[spillerKort3 - 1];
       spillerKortArray.push(spillerKort3);
-      document.getElementById("currentPoint").innerText = currentValue(spillerKortArray);
+      document.getElementById("currentPoint").innerText = currentValue(
+        spillerKortArray
+      );
       if (currentValue(spillerKortArray) > 21) {
         resultat(dealerKortArray);
       }
@@ -273,7 +281,9 @@ function steg2() {
     if (at == 1) {
       bilde12.src = alleKortBilder[spillerKort4 - 1];
       spillerKortArray.push(spillerKort4);
-      document.getElementById("currentPoint").innerText = currentValue(spillerKortArray);
+      document.getElementById("currentPoint").innerText = currentValue(
+        spillerKortArray
+      );
       if (currentValue(spillerKortArray) > 21) {
         resultat(dealerKortArray);
       }
@@ -281,7 +291,9 @@ function steg2() {
     if (at == 2) {
       bilde13.src = alleKortBilder[spillerKort5 - 1];
       spillerKortArray.push(spillerKort4);
-      document.getElementById("currentPoint").innerText = currentValue(spillerKortArray);
+      document.getElementById("currentPoint").innerText = currentValue(
+        spillerKortArray
+      );
 
       if (currentValue(spillerKortArray) > 21) {
         resultat(spillerKortArray);
@@ -290,7 +302,9 @@ function steg2() {
     if (at == 3) {
       bilde14.src = alleKortBilder[spillerKort6 - 1];
       spillerKortArray.push(spillerKort5);
-      document.getElementById("currentPoint").innerText = currentValue(spillerKortArray);
+      document.getElementById("currentPoint").innerText = currentValue(
+        spillerKortArray
+      );
       if (currentValue(spillerKortArray) > 21) {
         resultat(spillerKortArray);
       }
@@ -298,7 +312,9 @@ function steg2() {
     if (at == 4) {
       bilde15.src = alleKortBilder[spillerKort7 - 1];
       spillerKortArray.push(spillerKort6);
-      document.getElementById("currentPoint").innerText = currentValue(spillerKortArray);
+      document.getElementById("currentPoint").innerText = currentValue(
+        spillerKortArray
+      );
       if (currentValue(spillerKortArray) > 21) {
         resultat(spillerKortArray);
       }
@@ -306,7 +322,9 @@ function steg2() {
     if (at == 5) {
       bilde16.src = alleKortBilder[spillerKort8 - 1];
       spillerKortArray.push(spillerKort7);
-      document.getElementById("currentPoint").innerText = currentValue(spillerKortArray);
+      document.getElementById("currentPoint").innerText = currentValue(
+        spillerKortArray
+      );
       if (currentValue(spillerKortArray) > 21) {
         resultat(spillerKortArray);
       }
@@ -322,8 +340,11 @@ function steg2() {
   function staFunksjon() {
     bilde2.src = alleKortBilder[dealerKort2 - 1];
     dealerKortArray = [dealerKort1, dealerKort2];
-    document.getElementById("currentPointDealer").innerText = currentValue(dealerKortArray);
-    let dealerSum = alleKortPoeng[dealerKort1 - 1] + alleKortPoeng[dealerKort2 - 1];
+    document.getElementById("currentPointDealer").innerText = currentValue(
+      dealerKortArray
+    );
+    let dealerSum =
+      alleKortPoeng[dealerKort1 - 1] + alleKortPoeng[dealerKort2 - 1];
 
     if (currentValue(dealerKortArray) < 17) {
       setTimeout(function() {
@@ -333,7 +354,9 @@ function steg2() {
         console.log(currentValue(dealerKortArray));
         bilde3.src = alleKortBilder[dealerKort3 - 1];
         dealerKortArray.push(dealerKort3);
-        document.getElementById("currentPointDealer").innerText = currentValue(dealerKortArray);
+        document.getElementById("currentPointDealer").innerText = currentValue(
+          dealerKortArray
+        );
         if (currentValue(dealerKortArray) < 17) {
           setTimeout(function() {
             kort4();
@@ -349,7 +372,9 @@ function steg2() {
       console.log(currentValue(dealerKortArray));
       bilde4.src = alleKortBilder[dealerKort4 - 1];
       dealerKortArray.push(dealerKort4);
-      document.getElementById("currentPointDealer").innerText = currentValue(dealerKortArray);
+      document.getElementById("currentPointDealer").innerText = currentValue(
+        dealerKortArray
+      );
       if (currentValue(dealerKortArray) < 17) {
         setTimeout(function() {
           kort5();
@@ -362,7 +387,9 @@ function steg2() {
       console.log(currentValue(dealerKortArray));
       bilde5.src = alleKortBilder[dealerKort5 - 1];
       dealerKortArray.push(dealerKort5);
-      document.getElementById("currentPointDealer").innerText = currentValue(dealerKortArray);
+      document.getElementById("currentPointDealer").innerText = currentValue(
+        dealerKortArray
+      );
       if (currentValue(dealerKortArray) < 17) {
         setTimeout(function() {
           kort6();
@@ -375,7 +402,9 @@ function steg2() {
       console.log(currentValue(dealerKortArray));
       bilde6.src = alleKortBilder[dealerKort6 - 1];
       dealerKortArray.push(dealerKort6);
-      document.getElementById("currentPointDealer").innerText = currentValue(dealerKortArray);
+      document.getElementById("currentPointDealer").innerText = currentValue(
+        dealerKortArray
+      );
       if (currentValue(dealerKortArray) < 17) {
         setTimeout(function() {
           kort7();
@@ -388,7 +417,9 @@ function steg2() {
       console.log(currentValue(dealerKortArray));
       bilde7.src = alleKortBilder[dealerKort7 - 1];
       dealerKortArray.push(dealerKort7);
-      document.getElementById("currentPointDealer").innerText = currentValue(dealerKortArray);
+      document.getElementById("currentPointDealer").innerText = currentValue(
+        dealerKortArray
+      );
       if (currentValue(dealerKortArray) < 17) {
         setTimeout(function() {
           kort8();
@@ -401,21 +432,29 @@ function steg2() {
       console.log(currentValue(dealerKortArray));
       bilde8.src = alleKortBilder[dealerKort8 - 1];
       dealerKortArray.push(dealerKort8);
-      document.getElementById("currentPointDealer").innerText = currentValue(dealerKortArray);
+      document.getElementById("currentPointDealer").innerText = currentValue(
+        dealerKortArray
+      );
     }
     console.log("Andre dealersum: " + dealerSum);
     console.log("Andre spillersum: " + spillerSum);
   }
   function resultat() {
     if (currentValue(dealerKortArray) > 21) {
-      document.getElementById("ut1").innerHTML = "<br>" + "Dealer gikk over 21. Du vant!";
+      document.getElementById("ut1").innerHTML =
+        "<br>" + "Dealer gikk over 21. Du vant!";
       saldo += innsats.value * 2;
     } else {
-      if (currentValue(dealerKortArray) < currentValue(spillerKortArray) && currentValue(spillerKortArray) < 22) {
+      if (
+        currentValue(dealerKortArray) < currentValue(spillerKortArray) &&
+        currentValue(spillerKortArray) < 22
+      ) {
         let resultatVinn = "Gratulerer! Du vant.";
         document.getElementById("ut1").innerHTML = "<br>" + resultatVinn;
         saldo += innsats.value * 2;
-      } else if (currentValue(dealerKortArray) == currentValue(spillerKortArray)) {
+      } else if (
+        currentValue(dealerKortArray) == currentValue(spillerKortArray)
+      ) {
         let resultatPush = "Uavgjort. Det ble push.";
         document.getElementById("ut1").innerHTML = "<br>" + resultatPush;
         saldo += innsats.value * 1;
@@ -437,6 +476,7 @@ function steg2() {
     trekkNyKnapp.style.visibility = "hidden";
   }
 }
+//bhhbbuhb
 function nyRunde() {
   nyttSpillKnapp.onclick = () => {
     document.getElementById("sjekkInnsats").disabled = false;
